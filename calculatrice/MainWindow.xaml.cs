@@ -87,5 +87,73 @@ namespace calculatrice
             TB_Display.Text = TB_Display.Text + "0";
 
         }
+
+        private void BTN_Plus_Click(object sender, RoutedEventArgs e)
+        {
+
+            val1 = int.Parse(TB_Display.Text);
+            operation = '+';
+            TB_Display.Text = "";
+     
+        }
+
+        private void BTN_Moins_Click(object sender, RoutedEventArgs e)
+        {
+            val1 = int.Parse(TB_Display.Text);
+            operation = '-';
+            TB_Display.Text = "";
+        }
+
+        private void BTN_Fois_Click(object sender, RoutedEventArgs e)
+        {
+            val1 = int.Parse(TB_Display.Text); 
+            operation = '*';
+            TB_Display.Text = "";
+        }
+
+        private void BTN_Divisé_Click(object sender, RoutedEventArgs e)
+        {
+            val1 = int.Parse(TB_Display.Text);
+            operation = '/';
+            TB_Display.Text = "";
+        }
+
+        private void BTN_Egal_Click(object sender, RoutedEventArgs e)
+        {
+
+
+            val2 = int.Parse(TB_Display.Text);
+
+   
+
+
+            switch (operation)
+            {
+                case '+':
+                    TB_Display.Text = result.ToString();
+                    result = val1 + val2;
+                    break;
+                case '-':
+                    TB_Display.Text = result.ToString();
+                    result = val1 - val2;
+                    break;
+                case '*':
+                    TB_Display.Text = result.ToString();
+                    result = val1 * val2;
+                    break;
+                case '/':
+                    TB_Display.Text = result.ToString(); 
+
+                    result = val1 / val2;
+                    break;
+            }
+            TB_Display.Text = result.ToString();
+        
+
+        }
+        private void BTN_CLR_Click(object sender, RoutedEventArgs e)
+        {
+            TB_Display.Text = "";
+        }
     }
 }
