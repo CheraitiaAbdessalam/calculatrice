@@ -27,81 +27,43 @@ namespace calculatrice
         int result = 0;
         char operation = ' ';
 
-        private void BTN_1_Click(object sender, RoutedEventArgs e)
+        private void BTN_Click(object sender, RoutedEventArgs e)
         {
-            TB_Display.Text = TB_Display.Text + "1";
+            Button btn = (Button)sender;
+            TB_Display.Text += btn.Content.ToString();
         }
 
-        private void BTN_2_Click(object sender, RoutedEventArgs e)
-        {
-            TB_Display.Text = TB_Display.Text + "2";
-
-        }
-
-        private void BTN_3_Click(object sender, RoutedEventArgs e)
-        {
-            TB_Display.Text = TB_Display.Text + "3";
-
-        }
-
-        private void BTN_4_Click(object sender, RoutedEventArgs e)
-        {
-            TB_Display.Text = TB_Display.Text + "4";
-
-        }
-
-        private void BTN_5_Click(object sender, RoutedEventArgs e)
-        {
-            TB_Display.Text = TB_Display.Text + "5";
-
-        }
-
-        private void BTN_6_Click(object sender, RoutedEventArgs e)
-        {
-      
-            TB_Display.Text = TB_Display.Text + "6";
-
-
-        }
-
-        private void BTN_7_Click(object sender, RoutedEventArgs e)
-        {
-            TB_Display.Text = TB_Display.Text + "7";
-
-        }
-
-        private void BTN_8_Click(object sender, RoutedEventArgs e)
-        {
-            TB_Display.Text = TB_Display.Text + "8";
-
-        }
-
-        private void BTN_9_Click(object sender, RoutedEventArgs e)
-        {
-            TB_Display.Text = TB_Display.Text + "9";
-
-        }
-
-        private void BTN_0_Click(object sender, RoutedEventArgs e)
-        {
-            TB_Display.Text = TB_Display.Text + "0";
-
-        }
 
         private void BTN_Plus_Click(object sender, RoutedEventArgs e)
         {
-
-            val1 = int.Parse(TB_Display.Text);
-            operation = '+';
-            TB_Display.Text = "";
+            if (TB_Display.Text == "")
+            {
+                TB_Display.Text = "+";
+                return;
+            }
+            else
+            {
+                val1 = int.Parse(TB_Display.Text);
+                operation = '+';
+                TB_Display.Text = "";
+            }
+            
      
         }
 
         private void BTN_Moins_Click(object sender, RoutedEventArgs e)
         {
-            val1 = int.Parse(TB_Display.Text);
-            operation = '-';
-            TB_Display.Text = "";
+            if(TB_Display.Text == "")
+            {
+                TB_Display.Text = "-";
+                return;
+            }
+            else {
+                val1 = int.Parse(TB_Display.Text);
+                operation = '-';
+                TB_Display.Text = "";
+            }
+            
         }
 
         private void BTN_Fois_Click(object sender, RoutedEventArgs e)
@@ -116,6 +78,7 @@ namespace calculatrice
             val1 = int.Parse(TB_Display.Text);
             operation = '/';
             TB_Display.Text = "";
+            
         }
 
         private void BTN_Egal_Click(object sender, RoutedEventArgs e)
@@ -143,7 +106,11 @@ namespace calculatrice
                     break;
                 case '/':
                     TB_Display.Text = result.ToString(); 
-
+                    if (val2 == 0 || val1 == 0)
+                    {
+                        TB_Display.Text = "Error";
+                        return;
+                    }
                     result = val1 / val2;
                     break;
             }
