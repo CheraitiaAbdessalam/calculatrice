@@ -9,11 +9,9 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
+
 namespace calculatrice
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
         public MainWindow()
@@ -21,10 +19,9 @@ namespace calculatrice
             InitializeComponent();
         }
 
-
-        int val1 = 0;
-        int val2 = 0;
-        int result = 0;
+        double val1 = 0;
+        double val2 = 0;
+        double result = 0;
         char operation = ' ';
 
         private void BTN_Click(object sender, RoutedEventArgs e)
@@ -32,7 +29,6 @@ namespace calculatrice
             Button btn = (Button)sender;
             TB_Display.Text += btn.Content.ToString();
         }
-
 
         private void BTN_Plus_Click(object sender, RoutedEventArgs e)
         {
@@ -43,70 +39,58 @@ namespace calculatrice
             }
             else
             {
-                val1 = int.Parse(TB_Display.Text);
+                val1 = double.Parse(TB_Display.Text);
                 operation = '+';
                 TB_Display.Text = "";
             }
-            
-     
         }
 
         private void BTN_Moins_Click(object sender, RoutedEventArgs e)
         {
-            if(TB_Display.Text == "")
+            if (TB_Display.Text == "")
             {
                 TB_Display.Text = "-";
                 return;
             }
-            else {
-                val1 = int.Parse(TB_Display.Text);
+            else
+            {
+                val1 = double.Parse(TB_Display.Text);
                 operation = '-';
                 TB_Display.Text = "";
             }
-            
         }
 
         private void BTN_Fois_Click(object sender, RoutedEventArgs e)
         {
-            val1 = int.Parse(TB_Display.Text); 
+            val1 = double.Parse(TB_Display.Text);
             operation = '*';
             TB_Display.Text = "";
         }
 
         private void BTN_Divisé_Click(object sender, RoutedEventArgs e)
         {
-            val1 = int.Parse(TB_Display.Text);
+            val1 = double.Parse(TB_Display.Text);
             operation = '/';
             TB_Display.Text = "";
-            
         }
 
         private void BTN_Egal_Click(object sender, RoutedEventArgs e)
         {
-
-
-            val2 = int.Parse(TB_Display.Text);
-
-   
-
+            val2 = double.Parse(TB_Display.Text);
 
             switch (operation)
             {
                 case '+':
-                    TB_Display.Text = result.ToString();
                     result = val1 + val2;
                     break;
                 case '-':
-                    TB_Display.Text = result.ToString();
                     result = val1 - val2;
                     break;
                 case '*':
-                    TB_Display.Text = result.ToString();
                     result = val1 * val2;
                     break;
                 case '/':
-                    TB_Display.Text = result.ToString(); 
-                    if (val2 == 0 || val1 == 0)
+                    if (val2 == 0)
                     {
                         TB_Display.Text = "Error";
                         return;
@@ -114,13 +98,40 @@ namespace calculatrice
                     result = val1 / val2;
                     break;
             }
-            TB_Display.Text = result.ToString();
-        
 
+            TB_Display.Text = result.ToString();
         }
+
+      
+
+        private void BTN_PlusMinus_Click(object sender, RoutedEventArgs e)
+        {
+            // Si le texte est vide, rien ne se passe
+            if (string.IsNullOrEmpty(TB_Display.Text)) return;
+
+            // Convertir en nombre et inverser le signe
+            if (double.TryParse(TB_Display.Text, out double number))
+            {
+                TB_Display.Text = (-number).ToString();
+            }
+        }
+
         private void BTN_CLR_Click(object sender, RoutedEventArgs e)
         {
             TB_Display.Text = "";
         }
+
+        private void BTN_Virgule_Click(object sender, RoutedEventArgs e)
+        {
+            Button btn = sender as Button;
+            string value = btn.Content.ToString();
+
+            // Si la virgule est déjà présente dans le texte, on ne l'ajoute pas
+            if (TB_Display.Text.Contains(","))
+                return;
+
+            TB_Display.Text += value;
+        }
     }
-}
+    }
+
