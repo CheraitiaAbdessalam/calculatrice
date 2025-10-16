@@ -182,5 +182,24 @@ namespace calculatrice
                 TB_Display.Text = TB_Display.Text.Substring(0, TB_Display.Text.Length - 1); // Retire le dernier caractère
             }
         }
+
+        private void BTN_cos_Click(object sender, RoutedEventArgs e)
+        {
+            double value = double.Parse(TB_Display.Text);
+            TB_Display.Text = Math.Cos(value).ToString();
+        }
+
+        private void BTN_sin_Click(object sender, RoutedEventArgs e)
+        {
+            double value = double.Parse(TB_Display.Text);
+            TB_Display.Text = Math.Sin(value).ToString();
+        }
+
+        private void BTN_tan_Click(object sender, RoutedEventArgs e)
+        {
+            double value = double.Parse(TB_Display.Text);
+            TB_Display.Text = Math.Tan(value).ToString();
+        }
+
     }
 }

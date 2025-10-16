@@ -5,15 +5,80 @@
         WindowStartupLocation="CenterScreen"
         Background="Black">
 
+    <Window.Resources>
+
+        <!-- 🧩 STYLE DE BASE -->
+        <Style x:Key="BaseButtonStyle" TargetType="Button">
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="FontSize" Value="24"/>
+            <Setter Property="FontFamily" Value="Segoe UI"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border CornerRadius="10"
+                                Background="{TemplateBinding Background}">
+                            <ContentPresenter HorizontalAlignment="Center"
+                                              VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- 🔢 Boutons chiffres (0–9, ±, ,) -->
+        <Style x:Key="NumberButtonStyle" TargetType="Button" BasedOn="{StaticResource BaseButtonStyle}">
+            <Setter Property="Background" Value="#222"/>
+            <Setter Property="Foreground" Value="LightGreen"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#333"/>
+                </Trigger>
+                <Trigger Property="IsPressed" Value="True">
+                    <Setter Property="Background" Value="#111"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <!-- ➕ Boutons d’opération (+, -, *, /, %, ⌫, C) -->
+        <Style x:Key="OperationButtonStyle" TargetType="Button" BasedOn="{StaticResource BaseButtonStyle}">
+            <Setter Property="Background" Value="DarkGreen"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#006400"/>
+                </Trigger>
+                <Trigger Property="IsPressed" Value="True">
+                    <Setter Property="Background" Value="#004d00"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <!-- 🟩 Bouton Égal -->
+        <Style x:Key="EqualButtonStyle" TargetType="Button" BasedOn="{StaticResource BaseButtonStyle}">
+            <Setter Property="Background" Value="Green"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#228B22"/>
+                </Trigger>
+                <Trigger Property="IsPressed" Value="True">
+                    <Setter Property="Background" Value="#006400"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+    </Window.Resources>
+
     <Grid Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="120"/>
-            <!-- Zone d'affichage -->
             <RowDefinition Height="*"/>
-            <!-- Boutons -->
         </Grid.RowDefinitions>
 
-        <!-- Zone d'affichage -->
+        <!-- 🧮 Zone d'affichage -->
         <TextBox x:Name="TB_Display"
                  Grid.Row="0"
                  FontSize="36"
@@ -26,38 +91,44 @@
                  IsReadOnly="True"
                  Margin="10"/>
 
-        <!-- Grille des boutons -->
-        <UniformGrid Grid.Row="1" Columns="4" Rows="5" Margin="5">
-            <!-- Première ligne -->
+        <!-- 🔘 Grille des boutons -->
+        <UniformGrid Grid.Row="1" Columns="4" Rows="6" Margin="5">
 
-            <Button x:Name="BTN_CLR" Content="C" Background="DarkGreen" Foreground="White" FontSize="24" Margin="5" Click="BTN_CLR_Click"/>
-            <Button x:Name="BTN_Back" Content="⌫" Background="DarkGreen" Foreground="White" FontSize="24" Margin="5" Click="BTN_Back_Click"/>
-            <Button x:Name="BTN_Pourcent" Content="%" Background="DarkGreen" Foreground="White" FontSize="24" Margin="5" Click="BTN_Pourcent_Click"/>
-            <Button x:Name="BTN_Divisé" Content="/" Background="DarkGreen" Foreground="White" FontSize="24" Margin="5" Click="BTN_Divisé_Click"/>
+            <!-- 1ère ligne -->
+            <Button x:Name="BTN_CLR" Content="C" Style="{StaticResource OperationButtonStyle}" Click="BTN_CLR_Click"/>
+            <Button x:Name="BTN_Back" Content="⌫" Style="{StaticResource OperationButtonStyle}" Click="BTN_Back_Click"/>
+            <Button x:Name="BTN_Pourcent" Content="%" Style="{StaticResource OperationButtonStyle}" Click="BTN_Pourcent_Click"/>
+            <Button x:Name="BTN_Divisé" Content="/" Style="{StaticResource OperationButtonStyle}" Click="BTN_Divisé_Click"/>
 
-            <!-- Deuxième ligne -->
-            <Button x:Name="BTN_7" Content="7" Background="#222" Foreground="LightGreen" FontSize="24" Margin="5" Click="BTN_Click"/>
-            <Button x:Name="BTN_8" Content="8" Background="#222" Foreground="LightGreen" FontSize="24" Margin="5" Click="BTN_Click"/>
-            <Button x:Name="BTN_9" Content="9" Background="#222" Foreground="LightGreen" FontSize="24" Margin="5" Click="BTN_Click"/>
-            <Button x:Name="BTN_Fois" Content="*" Background="DarkGreen" Foreground="White" FontSize="24" Margin="5" Click="BTN_Fois_Click"/>
+            <!-- 2e ligne -->
+            <Button x:Name="BTN_7" Content="7" Style="{StaticResource NumberButtonStyle}" Click="BTN_Click"/>
+            <Button x:Name="BTN_8" Content="8" Style="{StaticResource NumberButtonStyle}" Click="BTN_Click"/>
+            <Button x:Name="BTN_9" Content="9" Style="{StaticResource NumberButtonStyle}" Click="BTN_Click"/>
+            <Button x:Name="BTN_Fois" Content="*" Style="{StaticResource OperationButtonStyle}" Click="BTN_Fois_Click"/>
 
-            <!-- Troisième ligne -->
-            <Button x:Name="BTN_4" Content="4" Background="#222" Foreground="LightGreen" FontSize="24" Margin="5" Click="BTN_Click"/>
-            <Button x:Name="BTN_5" Content="5" Background="#222" Foreground="LightGreen" FontSize="24" Margin="5" Click="BTN_Click"/>
-            <Button x:Name="BTN_6" Content="6" Background="#222" Foreground="LightGreen" FontSize="24" Margin="5" Click="BTN_Click"/>
-            <Button x:Name="BTN_Moins" Content="-" Background="DarkGreen" Foreground="White" FontSize="24" Margin="5" Click="BTN_Moins_Click"/>
+            <!-- 3e ligne -->
+            <Button x:Name="BTN_4" Content="4" Style="{StaticResource NumberButtonStyle}" Click="BTN_Click"/>
+            <Button x:Name="BTN_5" Content="5" Style="{StaticResource NumberButtonStyle}" Click="BTN_Click"/>
+            <Button x:Name="BTN_6" Content="6" Style="{StaticResource NumberButtonStyle}" Click="BTN_Click"/>
+            <Button x:Name="BTN_Moins" Content="-" Style="{StaticResource OperationButtonStyle}" Click="BTN_Moins_Click"/>
 
-            <!-- Quatrième ligne -->
-            <Button x:Name="BTN_1" Content="1" Background="#222" Foreground="LightGreen" FontSize="24" Margin="5" Click="BTN_Click"/>
-            <Button x:Name="BTN_2" Content="2" Background="#222" Foreground="LightGreen" FontSize="24" Margin="5" Click="BTN_Click"/>
-            <Button x:Name="BTN_3" Content="3" Background="#222" Foreground="LightGreen" FontSize="24" Margin="5" Click="BTN_Click"/>
-            <Button x:Name="BTN_Plus" Content="+" Background="DarkGreen" Foreground="White" FontSize="24" Margin="5" Click="BTN_Plus_Click"/>
+            <!-- 4e ligne -->
+            <Button x:Name="BTN_1" Content="1" Style="{StaticResource NumberButtonStyle}" Click="BTN_Click"/>
+            <Button x:Name="BTN_2" Content="2" Style="{StaticResource NumberButtonStyle}" Click="BTN_Click"/>
+            <Button x:Name="BTN_3" Content="3" Style="{StaticResource NumberButtonStyle}" Click="BTN_Click"/>
+            <Button x:Name="BTN_Plus" Content="+" Style="{StaticResource OperationButtonStyle}" Click="BTN_Plus_Click"/>
 
-            <!-- Cinquième ligne -->
-            <Button x:Name="BTN_PlusMinus" Content="±" Background="#222" Foreground="LightGreen" FontSize="24" Margin="5" Click="BTN_PlusMinus_Click"/>
-            <Button x:Name="BTN_0" Content="0" Background="#222" Foreground="LightGreen" FontSize="24" Margin="5" Click="BTN_Click"/>
-            <Button x:Name="BTN_Virgul" Content="," Background="#222" Foreground="LightGreen" FontSize="24" Margin="5" Click="BTN_Virgule_Click"/>
-            <Button x:Name="BTN_Egal" Content="=" Background="Green" Foreground="White" FontSize="24" Margin="5" Click="BTN_Egal_Click"/>
+            <!-- 5e ligne -->
+            <Button x:Name="BTN_PlusMinus" Content="±" Style="{StaticResource NumberButtonStyle}" Click="BTN_PlusMinus_Click"/>
+            <Button x:Name="BTN_0" Content="0" Style="{StaticResource NumberButtonStyle}" Click="BTN_Click"/>
+            <Button x:Name="BTN_Virgul" Content="," Style="{StaticResource NumberButtonStyle}" Click="BTN_Virgule_Click"/>
+            <Button x:Name="BTN_Racine" Content="√" Style="{StaticResource OperationButtonStyle}" Click="BTN_Racine_Click"/>
+            <!-- 6e ligne : Racine carrée -->
+            <Button x:Name="BTN_cos" Content="cos" Style="{StaticResource OperationButtonStyle}" Click="BTN_cos_Click"/>
+            <Button x:Name="BTN_sin" Content="sin" Style="{StaticResource OperationButtonStyle}" Click="BTN_sin_Click"/>
+            <Button x:Name="BTN_tan" Content="tan" Style="{StaticResource OperationButtonStyle}" Click="BTN_tan_Click"/>
+            <Button x:Name="BTN_Egal" Content="=" Style="{StaticResource EqualButtonStyle}" Click="BTN_Egal_Click"/>
+
         </UniformGrid>
     </Grid>
 </Window>
